@@ -10,7 +10,7 @@ from controller.ControladorPDF import ControladorPdf
 def agregar_acta(st, controlador):
     st.title("Generación De Actas")
     col1, col2, col3 = st.columns(3)
-    col5, col6, col7, col8 = st.columns(4)
+    col5, col6, col7, col8, col9 = st.columns(5)
     # Objeto que modelará el formulario
     info_acta_obj = InfoActa(controlador.criterios)
     info_acta_obj.fecha_acta = datetime.today().strftime('%Y-%m-%d')
@@ -28,6 +28,8 @@ def agregar_acta(st, controlador):
         info_acta_obj.jurado1 = st.text_input("Jurado #1")
     with col8:
         info_acta_obj.jurado2 = st.text_input("Jurado #2")
+    with col9:
+        info_acta_obj.fecha_presentacion = st.text_input("Fecha de Presentacion")
     enviado_btn = st.button("Enviar")
 
     # Cuando se oprime el botón se agrega a la lista
