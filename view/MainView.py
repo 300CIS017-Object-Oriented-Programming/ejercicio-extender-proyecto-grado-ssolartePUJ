@@ -42,7 +42,7 @@ class MainView:
         # Definimos lo que abra en la barra de menu
         with st.sidebar:
             st.image("img/LogoJaverianaCali.jpg", width=297)
-            self.menu_actual = option_menu("Menu", ["Inicio", 'Crear acta', 'Evaluar acta', 'Ver históricos'],
+            self.menu_actual = option_menu("Menu", ["Inicio", 'Crear acta', 'Evaluar acta', 'Generar PDF','Ver históricos'],
                                            icons=['house', 'mortarboard', 'people', 'person-check-fill'], menu_icon="cast", default_index=0)
 
     def mostrar_bienvenida(self):
@@ -52,7 +52,7 @@ class MainView:
             Recuerda que debes entrar a tu bloque de selección dependiendo de la opción deseada:
             >Nota: Cualquier Inconveniente porfavor comunicarse con: ayudaactas@javerianacali.edu.co
             >> Autores: *Miguel Angel Nivia Ortega* Y *Jose Manuel Garcia Lopez* 😎️
-            >> Modificado por: Luisa Rincón\n
+            >> Modificado por: Luisa Rincón y Samuel Solarte\n
             """
 
     def controlar_menu(self):
@@ -66,9 +66,10 @@ class MainView:
             ver_historico_acta(st, self.controller)
         elif self.menu_actual == "Evaluar acta":
             evaluar_criterios(st, self.controller)
-            exportar_acta(st, self.controller)
         elif self.menu_actual == "Ver históricos":
             ver_historico_acta(st, self.controller)
+        elif self.menu_actual == "Generar PDF":
+            exportar_acta(st,self.controller)
 
 
 # Main call
