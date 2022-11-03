@@ -66,7 +66,8 @@ class ControladorPdf:
                 self.pdf.cell(95, 10, txt="Números", ln=0, align='C')
                 self.pdf.cell(35, 10, txt="Letras", ln=1, align='C')
                 self.pdf.set_font("times", size=12)
-                self.pdf.multi_cell(185, 5, txt="Observaciones adicionales: ", align='L')
+                self.pdf.multi_cell(185, 5, txt=f"Observaciones adicionales: {acta.info_adicional}", align='L')
+                self.pdf.multi_cell(185, 5, txt=f"Observaciones adicionales: {acta.restriccion_nota_final}", align='L')
                 self.pdf.multi_cell(185, 5,
                                txt="_____________________________________________________________________________________",
                                align='L')
@@ -90,7 +91,7 @@ class ControladorPdf:
                                align='L')
                 self.pdf.cell(200, 30, txt="________________________________   ________________________________", ln=2,
                          align='C')
-                self.pdf.cell(200, 5, txt="Firma Jurado 1                                      Firma Jurado 2 ", ln=2,
+                self.pdf.cell(200, 5, txt=f"{acta.jurado1}                                      {acta.jurado2} ", ln=2,
                          align='C')
 
         if [acta.autor for acta in controlador.actas if acta.estado and flag]:

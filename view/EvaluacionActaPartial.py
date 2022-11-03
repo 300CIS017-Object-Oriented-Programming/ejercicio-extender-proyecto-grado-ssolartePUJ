@@ -26,14 +26,14 @@ def agregar_acta(st, controlador):
         info_acta_obj.codirector = st.text_input("Codirector", "N.A")
     with col7:
         info_acta_obj.jurado1 = st.text_input("Jurado #1")
-        if(st.checkbox("Jurado 1: Externo")):
-            info_acta_obj.tipo_jurado1="Externo"
+        if st.checkbox("Jurado 1: Externo"):
+            info_acta_obj.tipo_jurado1 = "Externo"
         else:
-            info_acta_obj.tipo_jurado1="Interno"
+            info_acta_obj.tipo_jurado1 = "Interno"
 
     with col8:
         info_acta_obj.jurado2 = st.text_input("Jurado #2")
-        if(st.checkbox("Jurado 2: Externo")):
+        if st.checkbox("Jurado 2: Externo"):
             info_acta_obj.tipo_jurado2="Externo"
         else:
             info_acta_obj.tipo_jurado2="Interno"
@@ -130,6 +130,16 @@ def evaluar_criterios(st, controlador):
                 criterio.observacion = st.text_input(str(num) + ". Observación", "Sin Comentarios.")
                 temp += criterio.nota
                 num += 1
+
+            st.write("Comentarios Adicionales: ")
+            acta.info_adicional = st.text_input("Informacion Adicional", "Sin Comentarios.")
+
+            st.write("Restriccion Nota Final")
+            acta.restriccion_nota_final = st.number_input("Restriccion: ", 0.0, 5.0)
+
+            if temp > acta.restriccion_nota_final:
+                temp = acta.restriccion_nota_final
+
             if temp > 3.5:
                 st.write("#### Nota Final", temp, "Acta Aprobada.")
             else:
@@ -173,3 +183,38 @@ def exportar_acta(st, controlador):
 
     if len(controlador.actas) == 0:
         st.warning("No Hay Ningún Estudiante Calificado Actualmente.")
+
+def estadisticas(st, controlador):
+    st.title("Estadisticas")
+    contExt = 0
+    contInt = 0
+    contAp = 0
+    contInv = 0
+    contSobreSaliente = 0
+
+    for acta in controlador.actas:
+        if (acta.tipo_jurado2 == "Externo") or (acta.tipo_jurado1 == "Externo"):
+            contExt += 1
+        if (acta.tipo_jurado2 == "Interno") or (acta.tipo_jurado1 == "Interno"):
+            contInt += 1
+        if acta.nota_final>4.8:
+            contSobreSaliente += 1
+        if acta.tipo_trabajo == "Aplicado":
+            contAp += 1
+        if acta.tipo_trabajo == "Investigación":
+            contInv += 1
+
+    st.write(f"Proyectos De Investigación: {contInv}")
+    st.write(f"Proyectos Aplicados: {contAp}")
+
+    st.write(f"Proyectos con jurados internos: {contInt}")
+    st.write(f"Proyectos con jurados externos: {contExt}")
+
+    st.write(f"Proyectos con nota mayor a 4.8: {contSobreSaliente}")
+
+
+
+
+
+
+

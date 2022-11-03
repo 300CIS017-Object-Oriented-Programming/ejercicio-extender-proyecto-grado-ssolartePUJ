@@ -8,7 +8,8 @@ import streamlit as st
 
 from streamlit_option_menu import option_menu
 from controller.Controlador import Controlador
-from view.EvaluacionActaPartial import ver_historico_acta, agregar_acta, evaluar_criterios, exportar_acta
+from view.EvaluacionActaPartial import ver_historico_acta, agregar_acta, evaluar_criterios, exportar_acta, estadisticas
+
 
 # Este archivo contiene las funcionalidades de la vista relacionado con la evaluación de las actas
 
@@ -42,7 +43,7 @@ class MainView:
         # Definimos lo que abra en la barra de menu
         with st.sidebar:
             st.image("img/LogoJaverianaCali.jpg", width=297)
-            self.menu_actual = option_menu("Menu", ["Inicio", 'Crear acta', 'Evaluar acta', 'Generar PDF','Ver históricos'],
+            self.menu_actual = option_menu("Menu", ["Inicio", 'Crear acta', 'Evaluar acta', 'Generar PDF','Ver históricos','Estadísticas'],
                                            icons=['house', 'mortarboard', 'people', 'person-check-fill'], menu_icon="cast", default_index=0)
 
     def mostrar_bienvenida(self):
@@ -70,6 +71,10 @@ class MainView:
             ver_historico_acta(st, self.controller)
         elif self.menu_actual == "Generar PDF":
             exportar_acta(st,self.controller)
+        elif self.menu_actual == "Estadísticas":
+            estadisticas(st, self.controller)
+
+
 
 
 # Main call
