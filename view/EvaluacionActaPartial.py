@@ -1,5 +1,6 @@
 import os
 
+import plotly.io as pio
 from model.InfoActa import InfoActa
 from datetime import datetime
 from controller.ControladorPDF import ControladorPdf
@@ -132,7 +133,7 @@ def evaluar_criterios(st, controlador):
                 num += 1
 
             st.write("Comentarios Adicionales: ")
-            acta.info_adicional = st.text_input("Informacion Adicional", "Sin Comentarios.")
+            acta.info_adicional = st.text_input("Informacion Extra", "Sin Comentarios.")
 
             st.write("Restriccion Nota Final")
             acta.restriccion_nota_final = st.number_input("Restriccion: ", 0.0, 5.0)
@@ -212,9 +213,30 @@ def estadisticas(st, controlador):
 
     st.write(f"Proyectos con nota mayor a 4.8: {contSobreSaliente}")
 
+    graficarEstadisticas(st, [contInt, contExt, contInv, contAp])
+
+def graficarEstadisticas(st, estadisticas):
+    st.title("Gráficos")
+
+    graficaJueces(st, estadisticas[0], estadisticas[1])
+    graficaProyectos(st, estadisticas[2], estadisticas[3])
 
 
+def graficaJueces(st, contInt, contExt):
+    st.write("Tipos Jueces")
+    fig = dict({
+        "data": [{"type": "bar",
+                  "x": ("Proyectos con jurados internos:","Proyectos con jurados externos:"),
+                  "y": (contInt, contExt)}],
+    })
+    pio.show(fig)
 
-
-
+def graficaProyectos(st, contInv, contAp):
+    st.write("Tipos Proyectos")
+    fig = dict({
+        "data": [{"type": "bar",
+                  "x": ("Proyectos De Investigación:","Proyectos Aplicados:"),
+                  "y": (contInv, contAp)}],
+    })
+    pio.show(fig)
 
